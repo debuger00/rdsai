@@ -9,3 +9,15 @@ wheels/
 
 # Virtual environments
 .venv
+
+
+#个人文件
+.wyh/
+.codegraph/
+# Local secrets, editor settings, and runtime data
+.env
+.env.*
+!.env.example
+.langgraph_api/
+.vscode/
+config/config - 副本.json

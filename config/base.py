@@ -19,7 +19,7 @@ from database import (
     create_database_connection_context,
 )
 
-# Backward compatibility alias
+# Backward compatibility alias  #后向连接兼容
 DatabaseConnectionContext = ConnectionContext
 
 
@@ -81,8 +81,8 @@ class Session:
         _db_connection: Current database connection context (mutable)
     """
 
-    id: str
-    _db_connection: DatabaseConnectionContext | None = field(default=None, repr=False)
+    id: str  # 会话id 吗 uuid  
+    _db_connection: DatabaseConnectionContext | None = field(default=None, repr=False)  # 数据库连接
 
     @property
     def db_connection(self) -> DatabaseConnectionContext | None:
@@ -105,7 +105,7 @@ class Session:
         ssl_cert: str | None = None,
         ssl_key: str | None = None,
         ssl_mode: str | None = None,
-    ) -> DatabaseConnectionContext:
+    ) -> DatabaseConnectionContext:  ## 连接
         """Connect to a database.
 
         If already connected, disconnects first.

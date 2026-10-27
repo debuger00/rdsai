@@ -30,7 +30,7 @@ class ToolRuntimeError(ToolError):
 
 class ToolOk(BaseModel):
     """Successful tool execution result."""
-
+    # 表示工具执行成果的结果对象
     message: str | None = None
     output: str | list[ContentPart] | ContentPart = ""
     brief: str | None = None
@@ -45,7 +45,7 @@ class ToolResult(BaseModel):
 
 
 # Type aliases
-ToolReturnType = ToolOk | ToolError
+ToolReturnType = ToolOk | ToolError # 工具返回值的类型别名
 HandleResult = ToolResult
 
 
@@ -63,7 +63,7 @@ class BaseTool(Generic[T]):
         class MyTool(BaseTool):  # Equivalent to BaseTool[Any]
             ...
     """
-
+    # 所有工具的基类， 让TodoList 遵循统一的工具接口
     name: str
     description: str
     params: type[T]

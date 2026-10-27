@@ -1,4 +1,7 @@
 from __future__ import annotations
+# **一句话记忆：先把类型注解记成文字，需要使用这些类型信息时，再解析成实际对象。**
+# 引用后面才定义的类型 
+
 
 import asyncio
 import sys
@@ -171,10 +174,10 @@ def cli_main(
 
     while True:
         try:
-            succeeded = asyncio.run(_run())
+            succeeded = asyncio.run(_run())# 这个也是循环
             if succeeded:
                 break
-            sys.exit(1)
+            sys.exit(1)#异常退出
         except Reload:
             continue
 

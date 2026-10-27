@@ -52,10 +52,10 @@ class Application:
     @staticmethod
     async def create(
         session: Session,
-        *,
+        *,  #单独的 * 表示：它后面的参数必须通过参数名传入，不能按位置传入
         yolo: bool = False,
         config_file: Path | None = None,
-    ) -> Application:
+    ) -> Application:  # 在 cli.py 里调用了一次
         """Create an Application instance.
 
         Args:
@@ -193,7 +193,7 @@ class Application:
 
     # --- Main Run Method ---
 
-    async def run(self) -> bool:
+    async def run(self) -> bool: # 在cli.py 里面调用了一次
         """Run the interactive shell."""
         from ui import ShellREPL
 

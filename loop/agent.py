@@ -16,6 +16,7 @@ from loop.toolset import BaseTool, DynamicToolset
 from utils.logging import logger
 
 
+
 @dataclass(frozen=True, slots=True, kw_only=True)
 class Agent:
     """The loaded agent configuration.
@@ -49,8 +50,21 @@ async def load_agent(
         FileNotFoundError: If the agent spec file does not exist.
         AgentSpecError: If the agent spec is not valid.
     """
+    # 根据配置文件， 把提示词 ， 工具和 运行环境组装成一个可供执行的Agent对象
+    """
+      Agent 的 YAML 配置 + Runtime 运行环境
+                    ↓
+             读取和解析配置
+                    ↓
+             加载系统提示词
+                    ↓
+          导入工具类、注入依赖、创建实例
+                    ↓
+               返回 Agent
+    """
+
     logger.info("Loading agent: {agent_file}", agent_file=agent_file)
-    agent_spec = load_agent_spec(agent_file)
+    agent_spec = load_agent_spec(agent_file)# 这里导入了 agent
 
     system_prompt = _load_system_prompt(
         agent_spec.system_prompt_path,

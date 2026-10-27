@@ -17,7 +17,7 @@ from database import (
 )
 
 
-class Params(BaseModel):
+class Params(BaseModel): ##接收 SQL 和加载提示词
     sql: str = Field(
         description=(
             "The SQL SELECT query to execute for data analysis. "
@@ -239,7 +239,7 @@ class DataAnalyzer(BaseTool[Params]):
         }
 
     @override
-    async def __call__(self, params: Params) -> ToolReturnType:
+    async def __call__(self, params: Params) -> ToolReturnType: # 将查询结果变成可读表格
         """Execute the tool with error handling."""
         try:
             result = await self._execute_tool(params)

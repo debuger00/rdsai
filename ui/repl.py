@@ -40,7 +40,7 @@ class ShellREPL:
 
     def __init__(
         self,
-        loop: Loop,
+        loop: Loop, ## NeoLoop
         welcome_info: list[WelcomeInfoItem] | None = None,
         db_service: DatabaseService | None = None,
         query_history: QueryHistory | None = None,
@@ -138,6 +138,7 @@ class ShellREPL:
             console.print()  # Add spacing before prompt
 
     async def run(self) -> bool:
+        ## 路由表
         console.clear()
 
         # Print initial welcome info
@@ -148,13 +149,13 @@ class ShellREPL:
 
         try:
             with CustomPromptSession(
-                status_provider=lambda: self.loop.status,
-                db_service=self._db_service,
-                on_thinking_toggle=self._on_thinking_toggle,
-                on_explain_result=self._explain_last_sql_result,
-            ) as prompt_session:
+                status_provider=lambda: self.loop.status, # 需要显示状态时，获取当前 Loop 状态
+                db_service=self._db_service, #  给输入界面提供数据库相关信息
+                on_thinking_toggle=self._on_thinking_toggle, # 用户切换思考模式时调用
+                on_explain_result=self._explain_last_sql_result, # 用户触发结果解释时调用
+            ) as prompt_session: ## 负责终端输入交互。
                 self._prompt_session = prompt_session
-                while True:
+                while True: #交互持续进行
                     try:
                         ensure_new_line()
                         user_input = await prompt_session.prompt()
