@@ -24,7 +24,7 @@ DEFAULT_AGENT_FILE = get_agents_dir() / "default_agent.yaml"
 class AgentSpec(BaseModel):
     """Agent specification."""
 
-    extend: str | None = Field(default=None, description="Agent file to extend")
+    extend: str | None = Field(default=None, description="Agent file to extend") # 附带的agent项目
     name: str | None = Field(default=None, description="Agent name")  # required
     system_prompt_path: Path | None = Field(default=None, description="System prompt path")  # required
     system_prompt_args: dict[str, str] = Field(default_factory=dict, description="System prompt arguments")
@@ -32,15 +32,15 @@ class AgentSpec(BaseModel):
     exclude_tools: list[str] | None = Field(default=None, description="Tools to exclude")
 
 
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True, kw_only=True)  # 字段不可重新赋值、固定属性槽位、仅允许关键字传参
 class ResolvedAgentSpec:
-    """Resolved agent specification."""
+    """解析后的 Agent 配置。"""
 
-    name: str
-    system_prompt_path: Path
-    system_prompt_args: dict[str, str]
-    tools: list[str]
-    exclude_tools: list[str]
+    name: str  # Agent 名称
+    system_prompt_path: Path  # 系统提示词文件路径
+    system_prompt_args: dict[str, str]  # 系统提示词模板参数
+    tools: list[str]  # 启用的工具列表
+    exclude_tools: list[str]  # 排除的工具列表
 
 
 def load_agent_spec(agent_file: Path) -> ResolvedAgentSpec:
@@ -87,7 +87,7 @@ def _load_agent_spec(agent_file: Path) -> AgentSpec:
         raise AgentSpecError(f"Unsupported agent spec version: {version}")
 
     # 取出 agent 节点，通过 Pydantic 模型校验字段并填充默认值。
-    agent_spec = AgentSpec(**data.get("agent", {}))
+    agent_spec = AgentSpec(**data.get("agent", {})) # ** 解包
     # 提示词的相对路径以当前 YAML 所在目录为基准，而不是程序的工作目录。
     if agent_spec.system_prompt_path is not None:
         agent_spec.system_prompt_path = (agent_file.parent / agent_spec.system_prompt_path).absolute()

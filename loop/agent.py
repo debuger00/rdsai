@@ -66,6 +66,15 @@ async def load_agent(
     logger.info("Loading agent: {agent_file}", agent_file=agent_file)
     agent_spec = load_agent_spec(agent_file)# 这里导入了 agent
 
+    # 这里的agent_spec
+    # class ResolvedAgentSpec:
+    # """解析后的 Agent 配置。"""
+    # name: str  # Agent 名称
+    # system_prompt_path: Path  # 系统提示词文件路径
+    # system_prompt_args: dict[str, str]  # 系统提示词模板参数
+    # tools: list[str]  # 启用的工具列表
+    # exclude_tools: list[str]  # 排除的工具列表
+
     system_prompt = _load_system_prompt(
         agent_spec.system_prompt_path,
         agent_spec.system_prompt_args,

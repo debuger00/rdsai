@@ -34,7 +34,7 @@ def cli_main(
         typer.Option(
             "--version",
             "-v",
-            callback=_version_callback,
+            callback=_version_callback, ## 回调函数
             help="Show version information and exit.",
         ),
     ] = False,

@@ -68,7 +68,8 @@ class Application:
             ConfigError(CLIException): When the configuration is invalid.
             AgentSpecError(CLIException): When the agent specification is invalid.
         """
-        config = load_config(config_file)
+        config = load_config(config_file)  # 这个 load_config 传入 None的话， 就会使用默认 ~/.rdsai-cli/config.json
+        # config  是 Config 类的示例
         logger.info("Loaded config: {config}", config=config)
 
         # Load MCP configuration from default path
@@ -108,7 +109,7 @@ class Application:
         else:
             logger.info("Using LLM provider: {provider}", provider=provider)
             logger.info("Using LLM model: {model}", model=model)
-            llm = create_llm(provider, model)
+            llm = create_llm(provider, model)#  这里才是创建创建 LLM 模型客户端封装结构的地方？
 
         runtime = await Runtime.create(config, llm, session, mcp_config, yolo)
         agent = await load_agent(DEFAULT_AGENT_FILE, runtime)
